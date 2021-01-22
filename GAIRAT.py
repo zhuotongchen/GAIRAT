@@ -155,7 +155,6 @@ def train(epoch, model, train_loader, optimizer, Lambda):
         optimizer.step()
         
         num_data += len(data)
-        print('Trained batch:', batch_idx)
         
     train_robust_loss = train_robust_loss / num_data
 
