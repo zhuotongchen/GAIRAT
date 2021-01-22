@@ -141,7 +141,7 @@ def train(epoch, model, train_loader, optimizer, Lambda):
         logit = model(x_adv)
 
         if (epoch + 1) >= args.begin_epoch:
-            Kappa = Kappa.cuda()
+            Kappa = Kappa.to(device)
             loss = nn.CrossEntropyLoss(reduce=False)(logit, target)
             # Calculate weight assignment according to geometry value
             normalized_reweight = GAIR(args.num_steps, Kappa, Lambda, args.weight_assignment_function)
