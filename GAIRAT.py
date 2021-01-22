@@ -140,14 +140,15 @@ def train(epoch, model, train_loader, optimizer, Lambda):
         
         logit = model(x_adv)
 
-        if (epoch + 1) >= args.begin_epoch:
-            Kappa = Kappa.to(device)
-            loss = nn.CrossEntropyLoss(reduce=False)(logit, target)
-            # Calculate weight assignment according to geometry value
-            normalized_reweight = GAIR(args.num_steps, Kappa, Lambda, args.weight_assignment_function)
-            loss = loss.mul(normalized_reweight).mean()
-        else:
-            loss = nn.CrossEntropyLoss(reduce="mean")(logit, target)
+        # if (epoch + 1) >= args.begin_epoch:
+        #     Kappa = Kappa.to(device)
+        #     loss = nn.CrossEntropyLoss(reduce=False)(logit, target)
+        #     # Calculate weight assignment according to geometry value
+        #     normalized_reweight = GAIR(args.num_steps, Kappa, Lambda, args.weight_assignment_function)
+        #     loss = loss.mul(normalized_reweight).mean()
+        # else:
+        #     loss = nn.CrossEntropyLoss(reduce="mean")(logit, target)
+        loss = nn.CrossEntropyLoss(reduce="mean")(logit, target)
         
         train_robust_loss += loss.item() * len(x_adv)
         
