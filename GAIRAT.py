@@ -45,13 +45,14 @@ width_factor = args.width_factor
 drop_rate = args.drop_rate
 resume = args.resume
 out_dir = args.out_dir
+
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 torch.manual_seed(seed)
 np.random.seed(seed)
 torch.cuda.manual_seed_all(seed)
-torch.backends.cudnn.benchmark = True
-torch.backends.cudnn.deterministic = True
+# torch.backends.cudnn.benchmark = True
+# torch.backends.cudnn.deterministic = True
 
 # Models and optimizer
 if args.net == "smallcnn":
@@ -67,7 +68,7 @@ if args.net == "WRN":
     model = Wide_ResNet_Madry(depth=depth, num_classes=10, widen_factor=width_factor, dropRate=drop_rate).to(device)
     net = "WRN{}-{}-dropout{}".format(depth,width_factor,drop_rate)
 
-model = torch.nn.DataParallel(model)
+# model = torch.nn.DataParallel(model)
 optimizer = optim.SGD(model.parameters(), lr=args.lr_max, momentum=momentum, weight_decay=weight_decay)
 
 # Learning schedules
