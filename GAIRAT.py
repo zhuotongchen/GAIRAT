@@ -17,7 +17,7 @@ parser.add_argument('--epsilon', type=float, default=0.031, help='perturbation b
 parser.add_argument('--num-steps', type=int, default=10, help='maximum perturbation step K')
 parser.add_argument('--step-size', type=float, default=0.007, help='step size')
 parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed')
-parser.add_argument('--net', type=str, default="WRN",help="decide which network to use,choose from smallcnn,resnet18,WRN")
+parser.add_argument('--net', type=str, default="resnet18",help="decide which network to use,choose from smallcnn,resnet18,WRN")
 parser.add_argument('--dataset', type=str, default="cifar10", help="choose from cifar10,svhn,cifar100,mnist")
 parser.add_argument('--random',type=bool,default=True,help="whether to initiat adversarial sample with random noise")
 parser.add_argument('--depth',type=int,default=32,help='WRN depth')
@@ -154,7 +154,8 @@ def train(epoch, model, train_loader, optimizer, Lambda):
         optimizer.step()
         
         num_data += len(data)
-
+        print('Trained batch:', batch_idx)
+        
     train_robust_loss = train_robust_loss / num_data
 
     return train_robust_loss, lr
